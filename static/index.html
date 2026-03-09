@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Support Operations Dashboard</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Support Operations Dashboard</h1>
+      <p>Incident management, monitoring, health checks, and log analysis</p>
+      <button onclick="logout()">Logout</button>
+    </header>
+
+    <section class="card">
+      <div class="section-header">
+        <h2>Login</h2>
+      </div>
+      <div class="form-row">
+        <input id="username" type="text" placeholder="Username" />
+        <input id="password" type="password" placeholder="Password" />
+        <button type="button" onclick="login()">Login</button>
+      </div>
+      <div id="login-status" class="result-box">Not logged in</div>
+    </section>
+
+    <section class="card">
+      <div class="section-header">
+        <h2>System Health</h2>
+        <button onclick="loadHealth()">Refresh Health</button>
+      </div>
+      <div id="healthResult" class="result-box">Click "Refresh Health"</div>
+    </section>
+
+    <section class="card" id="createIncidentSection">
+      <div class="section-header">
+        <h2>Create Incident</h2>
+      </div>
+      <form id="incidentForm">
+        <div class="form-row">
+          <input type="text" id="title" placeholder="Incident title" required />
+          <input type="text" id="service" placeholder="Service name" required />
+          <select id="priority">
+            <option value="low">low</option>
+            <option value="medium" selected>medium</option>
+            <option value="high">high</option>
+          </select>
+          <button type="submit">Create Incident</button>
+        </div>
+      </form>
+      <div id="incidentMessage" class="result-box"></div>
+    </section>
+
+    <section class="card">
+      <div class="section-header">
+        <h2>Incidents</h2>
+        <button onclick="loadIncidents()">Refresh Incidents</button>
+      </div>
+      <div id="incidentsList" class="table-wrap"></div>
+    </section>
+
+    <section class="card" id="monitorSection">
+      <div class="section-header">
+        <h2>Service Monitoring</h2>
+      </div>
+      <form id="monitorForm">
+        <div class="form-row">
+          <input type="text" id="monitorName" placeholder="Service name" required />
+          <input type="url" id="monitorUrl" placeholder="https://example.com" required />
+          <button type="submit">Check Service</button>
+        </div>
+      </form>
+      <div id="monitorResult" class="result-box"></div>
+    </section>
+
+    <section class="card" id="logSection">
+      <div class="section-header">
+        <h2>Log Analyzer</h2>
+      </div>
+      <form id="logForm">
+        <textarea id="logContent" rows="10" placeholder="Paste logs here..."></textarea>
+        <button type="submit">Analyze Logs</button>
+      </form>
+      <div id="logResult" class="result-box"></div>
+    </section>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
