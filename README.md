@@ -153,7 +153,7 @@ README.md
 # Installation
 
 Clone the repository:
-git clone https://github.com/yourusername/support-operations-dashboard.git
+git clone https://github.com/ullise89/support-operations-dashboard.git
 
 Navigate to the project:
 cd support-operations-dashboard
