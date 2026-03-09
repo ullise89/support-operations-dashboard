@@ -11,9 +11,12 @@ app = FastAPI(
     version="1.0.0"
 )
 
-init_db()
-
 app.mount("/static", StaticFiles(directory="static"), name="static")
+
+
+@app.on_event("startup")
+def on_startup():
+    init_db()
 
 
 @app.get("/")

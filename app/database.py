@@ -1,12 +1,14 @@
 from sqlalchemy import create_engine, Column, Integer, String, DateTime
 from sqlalchemy.orm import declarative_base, sessionmaker
+from sqlalchemy.exc import OperationalError
 from datetime import datetime
 from dotenv import load_dotenv
 import os
+import time
 
 load_dotenv()
 
-DB_HOST = os.getenv("DB_HOST", "localhost")
+DB_HOST = os.getenv("DB_HOST", "db")
 DB_PORT = os.getenv("DB_PORT", "3306")
 DB_USER = os.getenv("DB_USER", "root")
 DB_PASSWORD = os.getenv("DB_PASSWORD", "")
@@ -52,4 +54,16 @@ def get_db():
 
 
 def init_db():
-    Base.metadata.create_all(bind=engine)
+    max_retries = 20
+    retry_delay = 3
+
+    for attempt in range(1, max_retries + 1):
+        try:
+            Base.metadata.create_all(bind=engine)
+            print("Database tables created successfully.")
+            return
+        except OperationalError as e:
+            print(f"Database not ready yet (attempt {attempt}/{max_retries}): {e}")
+            time.sleep(retry_delay)
+
+    raise Exception("Could not connect to the database after multiple retries.")
